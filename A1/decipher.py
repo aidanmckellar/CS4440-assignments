@@ -35,8 +35,9 @@ def chi_score(column):
         letter_occurances[ord(letter) - 65] = letter_occurances[ord(letter) - 65] + 1
     chi_score = 0
     for i in range(26):
+        letter = chr(i + 65)
         if letter_occurances[i] != 0:
-            expected = len(column) * f[i]
+            expected = len(column) * f[letter]
             chi_score += chi_squared(letter_occurances[i], expected)
     return chi_score
 
@@ -70,8 +71,9 @@ cipherLength = int(len(ciphertext) / 8)
 block_list = []
 for x in range(cipherLength):
     x = x * 8
-    j = ciphertext[x:x + 8]
-    block_list.append(j)
+    block = ciphertext[x:x + 8]
+    block_list.append(block)
+    print(block)
 
 column_strings = []
 for x in range(8):
