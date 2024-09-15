@@ -18,21 +18,23 @@ def letter(index):
     if index > 25: index = index-26
     return sorted(list(f.keys()))[index]
 
-def chi_squared():
-        observed_count = 0
-        expected = 0
+def chi_squared(observed_count, expected):
         return (**2(observed_count-expected))/expected
 
-def find_observed_count(column):
+
+def chi_score(column):
     letter_occurances = {}
+    
     for i in range(26):
         letter_occurances.append(0)
     for letter in column:
         letter_occurances[letter-65] = letter_occurances[letter-65]+1
-
-    observed_count = letter_occurances[letter-65]  #incomplete: needs a list of observed counts
-    expected = len(column)*f[letter]
-    return (observed_count, expected)
+    chi_score = 0
+    for i in range(26)
+        if(letter_occurences[i] != 0):
+             expected = len(column)*f[i]
+             chi_score += chi_squared(letter_occurences[i], expected)
+    return chi_score
 
 def shifted_column(column, shift)
     shifted_column_output = ""
@@ -40,7 +42,9 @@ def shifted_column(column, shift)
         shifted_column_output = shifted_column_output + (letter-shift)
     reuturn shifted_column_output
 
-def chi_score:
+def find_lowest_chi_score(column):
+    for i in range(26):
+
     #uses shifted_column, find_observed_count and chi_squared
 
 
