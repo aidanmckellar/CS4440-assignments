@@ -68,19 +68,15 @@ def find_lowest_shift(column):
 # -----------------------------------------------------------------
 
 cipherLength = int(len(ciphertext) / 8)
-block_list = []
-for x in range(cipherLength):
-    x = x * 8
-    block = ciphertext[x:x + 8]
-    block_list.append(block)
-    print(block)
 
 column_strings = []
 for x in range(8):
     column_strings.append("")
-for block in block_list:
-    for character in range(8):
-        column_strings[character] += block[character]
+for x in range(len(ciphertext)):
+        index = x % 8
+        column_strings[index] += ciphertext[x]
+for c in column_strings:
+     print(c)
 key = ''
 for column in column_strings:
     shift = find_lowest_shift(column)
