@@ -4,6 +4,7 @@ import hashlib
 import sys
 message = sys.argv[1]
 
+print(message)
 #----------------------------------------------
 # TODO: Your signature forgery code goes here!
 #----------------------------------------------
