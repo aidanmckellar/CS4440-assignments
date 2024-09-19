@@ -21,11 +21,11 @@ def letter(index):
     if index > 25: index = index - 26
     return sorted(list(f.keys()))[index]
 
-
+# gets chi scored based on given observed count and expected count
 def chi_squared(observed_count, expected):
     return ((observed_count - expected) ** 2) / expected
 
-
+#returns chi score for a specific column
 def chi_score(column):
     letter_occurances = []
 
@@ -41,7 +41,7 @@ def chi_score(column):
             chi_score += chi_squared(letter_occurances[i], expected)
     return chi_score
 
-
+#shifts letters in a column by given shift length
 def shifted_column(column, shift):
     shifted_column_output = ""
     col = list(column)
@@ -49,7 +49,7 @@ def shifted_column(column, shift):
           shifted_column_output += chr(ord(letter)-shift)
     return shifted_column_output
 
-
+# finds value to shift for a column
 def find_lowest_shift(column):
     col = ''
     min_chi = 9999999999
@@ -62,12 +62,8 @@ def find_lowest_shift(column):
             min_shift = shift
     return min_shift
 
-    # uses shifted_column, find_observed_count and chi_squared
-
 
 # -----------------------------------------------------------------
-
-cipherLength = int(len(ciphertext) / 8)
 
 column_strings = []
 for x in range(8):
@@ -75,8 +71,6 @@ for x in range(8):
 for x in range(len(ciphertext)):
         index = x % 8
         column_strings[index] += ciphertext[x]
-for c in column_strings:
-     print(c)
 key = ''
 for column in column_strings:
     shift = find_lowest_shift(column)
