@@ -3,25 +3,29 @@ import http.client as httplib
 from urllib.parse import urlparse, quote
 import sys, re
 from pymd5 import *
+
 url = sys.argv[1]
+#extract values from url
+split_url = url.split('token=')
+token_commands = split_url[1].split('&user=')
+num_commands =len(token_commands[1].split('&'))
 
-
-m ='12345678' +  'user=admin&command1=ListFiles&command2=NoOp'
+#make new token with correct padding
+m ='12345678user=' + token_commands[1]
 padded_m_len =(len(m)  + len(padding((len(m)) * 8)))*8
-
-# Create a hash using the state and padded message length
 h2 = md5(
-        state = "402a574d265dc212ee64970f159575d0",
+        state = token_commands[0],
         count = padded_m_len
-
     )
+
+#make create updated url with new token
 command  = '&command3=UnlockAllSafes'
 h2.update(command)
 parsedUrl = urlparse(url)
+q = 'token='+h2.hexdigest()+'&user='+ token_commands[1] + quote(padding(len(m)*8))+'&command' +str(num_commands)+ '=UnlockAllSafes'
 
-# Added padding and final command to query
-query = 'token='+h2.hexdigest()+'&user=admin&command1=ListFiles&command2=NoOp'+ quote(padding(len(m)*8))+'&command3=UnlockAllSafes'
+#connect to new url
 conn = httplib.HTTPConnection(parsedUrl.hostname,parsedUrl.port)
-conn.request("GET", parsedUrl.path + "?" + query)
+conn.request("GET", parsedUrl.path + "?" + q)
 print(conn.getresponse().read())
 
